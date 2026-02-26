@@ -1,236 +1,758 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>  
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>陈曦设计网站</title>
+    <title>我的平面设计作品集</title>
     <style>
-        /* 全局样式重置 */
-        * {  
+        /* 全局样式 */
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Microsoft YaHei", sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* 导航栏样式 */
-        nav {  
-            background-color: #2c3e50;  
-            padding: 1rem 5%;
+        body {
+            background-color: #f8f8f8;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 导航栏 */
+        header {
+            background-color: #1a1a1a;
+            padding: 1.2rem 5%;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        nav ul {  
-            list-style: none;
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
-            gap: 2rem;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        nav a {  
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #00bfff;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        nav a {
             color: white;
             text-decoration: none;
-            font-size: 1.1rem;
-            transition: color 0.3s;
+            font-size: 1rem;
+            transition: color 0.3s ease;
         }
 
         nav a:hover {
-            color: #3498db;
+            color: #00bfff;
         }
 
-        /* 首页banner */
-        .banner {
-            height: 80vh;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("https://picsum.photos/1920/1080");
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
+        /* 上传区域 */
+        .upload-section {
+            max-width: 1400px;
+            margin: 3rem auto;
             padding: 0 5%;
         }
 
-        .banner h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+        .upload-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-bottom: 3rem;
         }
 
-        .banner p {
-            font-size: 1.2rem;
-            max-width: 800px;
+        .upload-container h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
         }
 
-        /* 内容板块 */
-        .section {
-            padding: 4rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section h2 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 0.5rem;
-        }
-
-        .card-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            border: 1px solid #eee;
+        #upload-area {
+            border: 2px dashed #ddd;
             border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+            margin-bottom: 1.5rem;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
+        #upload-area:hover {
+            border-color: #00bfff;
         }
 
-        .card h3 {
-            color: #3498db;
-            margin-bottom: 1rem;
+        #upload-area p {
+            color: #666;
+            margin-top: 1rem;
         }
 
-        /* 联系表单 */
-        form {
-            max-width: 600px;
+        #file-input {
+            display: none;
+        }
+
+        .upload-controls {
             display: flex;
-            flex-direction: column;
             gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
-        input, textarea {
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
             padding: 0.8rem;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 1rem;
         }
 
-        button {
-            background-color: #3498db;
+        #add-work-btn {
+            background-color: #00bfff;
             color: white;
             border: none;
-            padding: 0.8rem;
-            border-radius: 4px;
+            padding: 0.8rem 2rem;
+            border-radius: 6px;
             font-size: 1rem;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease;
+            white-space: nowrap;
         }
 
-        button:hover {
-            background-color: #2980b9;
+        #add-work-btn:hover {
+            background-color: #0099cc;
+        }
+
+        /* 筛选区域 */
+        .filter-section {
+            max-width: 1400px;
+            margin: 0 auto 2rem;
+            padding: 0 5%;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-btn {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: #00bfff;
+            color: white;
+            border-color: #00bfff;
+        }
+
+        /* 作品展示区域 */
+        .portfolio-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .work-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .work-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .work-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .work-info {
+            padding: 1.5rem;
+        }
+
+        .work-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #1a1a1a;
+        }
+
+        .work-category {
+            display: inline-block;
+            background-color: #f0f8ff;
+            color: #00bfff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .work-desc {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* 作品详情弹窗 */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 12px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #00bfff;
+        }
+
+        .modal-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .modal-info {
+            padding: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+            color: #1a1a1a;
+        }
+
+        .modal-category {
+            display: inline-block;
+            background-color: #f0f8ff;
+            color: #00bfff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-desc {
+            color: #555;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        /* 关于我区域 */
+        .about-section {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .about-info h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+        }
+
+        .about-info p {
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-link {
+            display: inline-block;
+            background-color: #00bfff;
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 2rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background-color: #0099cc;
         }
 
         /* 页脚 */
         footer {
-            background-color: #2c3e50;
+            background-color: #1a1a1a;
             color: white;
+            padding: 3rem 5%;
             text-align: center;
-            padding: 2rem;
-            margin-top: 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #00bfff;
         }
 
         /* 响应式适配 */
-        @media (max-width: 768px) {
-            .banner h1 {  
-                font-size: 2rem;
+        @media (max-width: 992px) {
+            .about-section {
+                grid-template-columns: 1fr;
             }
-            nav ul {  
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1.5rem;
+            }
+            
+            .upload-area {
+                padding: 2rem 1rem;
+            }
+            
+            .modal {
+                padding: 1rem;
+            }
+            
+            .modal-info {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-container {
                 flex-direction: column;
                 gap: 1rem;
             }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
-</head>                  
-<body>                
+    <!-- 引入Font Awesome图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
     <!-- 导航栏 -->
-    <nav>                
-        <ul>                
-            <li><a href="#home">首页</a></li>
-            <li><a href="#about">关于我</a></li>
-            <li><a href="#services">服务</a></li>
-            <li><a href="#contact">联系我</a></li>
-        </ul>                
-    </nav>                
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">设计<span>集</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#portfolio">作品集</a></li>
+                    <li><a href="#upload">上传作品</a></li>
+                    <li><a href="#about">关于我</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <!-- 首页Banner -->
-    <section id="home" class="banner">
-        <h1>欢迎来到陈曦设计网站</h1>
-        <p>这是一个完全免费制作并部署的网站，你可以自由修改内容、样式，打造属于自己的专属页面</p>
-    </section>                              
+    <!-- 上传作品区域 -->
+    <section id="upload" class="upload-section">
+        <div class="upload-container">
+            <h2>上传你的设计作品</h2>
+            <div id="upload-area">
+                <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #00bfff;"></i>
+                <p>点击或拖拽图片到此处上传</p>
+                <input type="file" id="file-input" accept="image/*">
+            </div>
+            <div class="upload-controls">
+                <div class="form-group">
+                    <label for="work-title">作品名称</label>
+                    <input type="text" id="work-title" placeholder="例如：品牌LOGO设计">
+                </div>
+                <div class="form-group">
+                    <label for="work-category">作品分类</label>
+                    <select id="work-category">
+                        <option value="logo">LOGO设计</option>
+                        <option value="poster">海报设计</option>
+                        <option value="ui">UI设计</option>
+                        <option value="brand">品牌设计</option>
+                        <option value="illustration">插画设计</option>
+                        <option value="other">其他</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="work-desc">作品描述</label>
+                    <input type="text" id="work-desc" placeholder="简单描述你的设计理念...">
+                </div>
+                <button id="add-work-btn">添加到作品集</button>
+            </div>
+        </div>
+    </section>
 
-    <!-- 关于板块 -->
-    <section id="about" class="section">
-        <h2>关于我</h2>
-        <p>你可以在这里填写个人介绍、网站用途等信息。比如：</p>
-        <br>                                
-        <p>大家好！我是一名编程新手，这是我用HTML/CSS制作的第一个免费网站。这个网站完全免费部署在GitHub Pages上，无需花费任何费用即可上线访问。</p>
-    </section>                            
+    <!-- 筛选和作品展示区域 -->
+    <section id="portfolio">
+        <div class="filter-section">
+            <button class="filter-btn active" data-category="all">全部作品</button>
+            <button class="filter-btn" data-category="logo">LOGO设计</button>
+            <button class="filter-btn" data-category="poster">海报设计</button>
+            <button class="filter-btn" data-category="ui">UI设计</button>
+            <button class="filter-btn" data-category="brand">品牌设计</button>
+            <button class="filter-btn" data-category="illustration">插画设计</button>
+            <button class="filter-btn" data-category="other">其他</button>
+        </div>
 
-    <!-- 服务板块 -->
-    <section id="services" class="section">
-        <h2>我的服务</h2>
-        <div class="card-container">
-            <div class="card">
-                <h3>服务1</h3>
-                <p>这里填写服务详情，比如：网站制作、内容创作、技术咨询等。</p>
-            </div>                                
-            <div class="card">
-                <h3>服务2</h3>
-                <p>自定义你的服务内容，修改文字即可适配你的需求。</p>
-            </div>                            
-            <div class="card">
-                <h3>服务3</h3>
-                <p>根据你的实际需求，添加或删除卡片模块。</p>
-            </div>                          
-        </div>                          
-    </section>                          
+        <div class="portfolio-grid" id="portfolio-grid">
+            <!-- 示例作品卡片 -->
+            <div class="work-card" data-category="logo">
+                <img src="https://picsum.photos/seed/logo1/600/400" alt="LOGO设计作品" class="work-img">
+                <div class="work-info">
+                    <h3 class="work-title">科技公司LOGO设计</h3>
+                    <span class="work-category">LOGO设计</span>
+                    <p class="work-desc">为科技初创公司设计的极简风格LOGO，融合了科技感与现代美学。</p>
+                </div>
+            </div>
 
-    <!-- 联系板块 -->
-    <section id="contact" class="section">
-        <h2>联系我</h2>
-        <form>                            
-            <input type="text" placeholder="你的姓名" required>
-            <input type="email" placeholder="你的邮箱" required>
-            <textarea rows="5" placeholder="你的留言" required></textarea>
-            <button type="submit">发送留言</button>
-        </form>                            
-    </section>                          
-  
+            <div class="work-card" data-category="poster">
+                <img src="https://picsum.photos/seed/poster1/600/400" alt="海报设计作品" class="work-img">
+                <div class="work-info">
+                    <h3 class="work-title">音乐节宣传海报</h3>
+                    <span class="work-category">海报设计</span>
+                    <p class="work-desc">为独立音乐节设计的视觉海报，采用撞色设计和手绘风格元素。</p>
+                </div>
+            </div>
+
+            <div class="work-card" data-category="ui">
+                <img src="https://picsum.photos/seed/ui1/600/400" alt="UI设计作品" class="work-img">
+                <div class="work-info">
+                    <h3 class="work-title">电商APP界面设计</h3>
+                    <span class="work-category">UI设计</span>
+                    <p class="work-desc">移动端电商APP的界面设计，注重用户体验和视觉层次感。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品详情弹窗 -->
+    <div class="modal" id="work-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <img src="" alt="作品详情图" class="modal-img" id="modal-img">
+            <div class="modal-info">
+                <h2 class="modal-title" id="modal-title"></h2>
+                <span class="modal-category" id="modal-category"></span>
+                <p class="modal-desc" id="modal-desc"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 关于我区域 -->
+    <section id="about" class="about-section">
+        <img src="https://picsum.photos/seed/designer/800/600" alt="设计师照片" class="about-img">
+        <div class="about-info">
+            <h2>关于我</h2>
+            <p>大家好！我是一名专注于平面设计的自由设计师，拥有5年的设计经验，擅长LOGO设计、品牌视觉、海报设计和UI/UX设计。</p>
+            <p>我的设计理念是：用简约的视觉语言传递深刻的品牌价值，注重细节与用户体验的平衡。曾为多家企业和品牌提供视觉设计服务，涵盖科技、文创、餐饮等多个领域。</p>
+            <p>如果你有设计需求或合作意向，欢迎联系我！</p>
+            <a href="mailto:your@email.com" class="contact-link">联系我 <i class="fas fa-envelope"></i></a>
+        </div>
+    </section>
+
     <!-- 页脚 -->
-    <footer>                      
-        <p>© 2026 我的免费网站 | 由GitHub Pages免费托管</p>
-    </footer>                      
+    <footer>
+        <div class="footer-content">
+            <h3>我的平面设计作品集</h3>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-behance"></i></a>
+                <a href="#"><i class="fab fa-dribbble"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-weixin"></i></a>
+            </div>
+            <p>&copy; 2026 我的设计作品集 | 所有作品均为原创设计</p>
+        </div>
+    </footer>
 
-    <script>                      
-        // 平滑滚动效果
+    <script>
+        // 全局变量
+        let selectedImage = null;
+
+        // 上传区域点击触发文件选择
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // 处理文件选择
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    selectedImage = event.target.result;
+                    uploadArea.style.borderColor = '#00bfff';
+                    uploadArea.innerHTML = `
+                        <img src="${selectedImage}" alt="预览图" style="max-width: 100%; max-height: 200px; border-radius: 8px;">
+                        <p style="margin-top: 1rem;">已选择：${file.name}</p>
+                    `;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 拖拽上传功能
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#00bfff';
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = '#ddd';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#00bfff';
+            
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    selectedImage = event.target.result;
+                    uploadArea.innerHTML = `
+                        <img src="${selectedImage}" alt="预览图" style="max-width: 100%; max-height: 200px; border-radius: 8px;">
+                        <p style="margin-top: 1rem;">已选择：${file.name}</p>
+                    `;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 添加作品到作品集
+        const addWorkBtn = document.getElementById('add-work-btn');
+        const portfolioGrid = document.getElementById('portfolio-grid');
+        
+        addWorkBtn.addEventListener('click', () => {
+            // 验证输入
+            const title = document.getElementById('work-title').value.trim();
+            const category = document.getElementById('work-category').value;
+            const desc = document.getElementById('work-desc').value.trim();
+            
+            if (!selectedImage) {
+                alert('请先上传作品图片！');
+                return;
+            }
+            
+            if (!title) {
+                alert('请填写作品名称！');
+                return;
+            }
+
+            // 创建作品卡片
+            const categoryName = document.getElementById('work-category').options[document.getElementById('work-category').selectedIndex].text;
+            const workCard = document.createElement('div');
+            workCard.className = 'work-card';
+            workCard.setAttribute('data-category', category);
+            workCard.innerHTML = `
+                <img src="${selectedImage}" alt="${title}" class="work-img">
+                <div class="work-info">
+                    <h3 class="work-title">${title}</h3>
+                    <span class="work-category">${categoryName}</span>
+                    <p class="work-desc">${desc || '暂无描述'}</p>
+                </div>
+            `;
+
+            // 添加到网格中
+            portfolioGrid.prepend(workCard);
+            
+            // 绑定弹窗事件
+            bindModalEvent(workCard);
+            
+            // 重置表单
+            resetUploadForm();
+            
+            alert('作品添加成功！');
+        });
+
+        // 重置上传表单
+        function resetUploadForm() {
+            selectedImage = null;
+            document.getElementById('work-title').value = '';
+            document.getElementById('work-category').value = 'logo';
+            document.getElementById('work-desc').value = '';
+            fileInput.value = '';
+            uploadArea.innerHTML = `
+                <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #00bfff;"></i>
+                <p>点击或拖拽图片到此处上传</p>
+                <input type="file" id="file-input" accept="image/*">
+            `;
+            uploadArea.style.borderColor = '#ddd';
+        }
+
+        // 作品筛选功能
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 切换激活状态
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const category = btn.getAttribute('data-category');
+                const workCards = document.querySelectorAll('.work-card');
+                
+                workCards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // 作品详情弹窗
+        const modal = document.getElementById('work-modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalTitle = document.getElementById('modal-title');
+        const modalCategory = document.getElementById('modal-category');
+        const modalDesc = document.getElementById('modal-desc');
+        const closeModal = document.querySelector('.close-modal');
+
+        // 绑定弹窗事件
+        function bindModalEvent(card) {
+            card.addEventListener('click', () => {
+                const imgSrc = card.querySelector('.work-img').src;
+                const title = card.querySelector('.work-title').textContent;
+                const category = card.querySelector('.work-category').textContent;
+                const desc = card.querySelector('.work-desc').textContent;
+                
+                modalImg.src = imgSrc;
+                modalTitle.textContent = title;
+                modalCategory.textContent = category;
+                modalDesc.textContent = desc;
+                
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        }
+
+        // 初始绑定已有卡片的弹窗事件
+        document.querySelectorAll('.work-card').forEach(card => {
+            bindModalEvent(card);
+        });
+
+        // 关闭弹窗
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // 点击弹窗外区域关闭
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // 平滑滚动
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'                      
-                });                      
-            });                    
-        });                      
-
-        // 表单提交提示
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('留言提交成功！（测试效果，实际需对接后端）');
-            this.reset();
-        });                      
-    </script>                      
-</body>                      
-</html>                      
-Initial commit
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
